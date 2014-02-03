@@ -1,0 +1,35 @@
+.autofill-text {
+    -fx-skin: "np.com.ngopal.control.AutoFillTextBoxSkin";
+    
+}
+
+/* .root {
+     -fx-background-image: url("../images/transparent-floral.png");
+} */
+.text-error {
+    -fx-control-inner-background: red;
+}
+.text-default {
+    -fx-control-inner-background: white;
+}
+.combo-error {
+    -fx-body-color: red;
+}
+.combo-default {
+    -fx-body-color: linear-gradient(
+        to bottom,
+        derive(-fx-color,34%) 0%,
+        derive(-fx-color,-18%) 100%
+    );
+}
+.date-picker-error {
+    -fx-background-color: red;
+}
+
+.date-picker-default {
+    -fx-background-color: black;
+}
+
+.border {
+    -fx-border-color: black;
+}
