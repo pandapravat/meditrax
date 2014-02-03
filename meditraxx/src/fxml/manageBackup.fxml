@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="299.0" prefWidth="466.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.pravat.meditrax.controller.ManageBackupController">
+  <children>
+    <TabPane prefHeight="299.0" prefWidth="466.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="Back Up">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <VBox id="VBox" alignment="CENTER" layoutX="0.0" layoutY="19.0" prefHeight="249.0" prefWidth="466.0" spacing="5.0">
+                  <children>
+                    <HBox prefHeight="55.0" prefWidth="454.0">
+                      <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="454.0" text="Create Backup" HBox.hgrow="ALWAYS">
+                          <font>
+                            <Font name="System Bold" size="18.0" fx:id="x1" />
+                          </font>
+                          <HBox.margin>
+                            <Insets top="20.0" />
+                          </HBox.margin>
+                        </Label>
+                      </children>
+                    </HBox>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="454.0" spacing="10.0">
+                      <children>
+                        <TextField fx:id="pathTf" disable="true" prefWidth="240.0" promptText="choose backup location" />
+                        <Button mnemonicParsing="false" onAction="#onBrowseAction" text="Browse" />
+                      </children>
+                    </HBox>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                      <children>
+                        <Button mnemonicParsing="false" onAction="#onOkAction" text="Ok" />
+                        <Button id="onCacelAction" mnemonicParsing="false" onAction="#onCancelAction" text="Cancel" />
+                      </children>
+                    </HBox>
+                  </children>
+                </VBox>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Restore">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <VBox id="VBox" alignment="CENTER" layoutX="0.0" layoutY="10.0" prefHeight="249.0" prefWidth="466.0" spacing="5.0">
+                  <children>
+                    <HBox prefHeight="55.0" prefWidth="454.0">
+                      <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" font="$x1" prefHeight="37.0" prefWidth="454.0" text="Restore from Backup" HBox.hgrow="ALWAYS">
+                          <HBox.margin>
+                            <Insets top="20.0" />
+                          </HBox.margin>
+                        </Label>
+                      </children>
+                    </HBox>
+                    <HBox id="HBox" alignment="CENTER" prefHeight="154.0" prefWidth="466.0" spacing="5.0">
+                      <children>
+                        <Text fx:id="restoreLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Restore text placeholder" />
+                      </children>
+                    </HBox>
+                  </children>
+                </VBox>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</VBox>
