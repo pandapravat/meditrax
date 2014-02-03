@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" minWidth="579.7999877929688" prefHeight="377.0" prefWidth="579.7999877929688" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.pravat.meditrax.controller.WelcomeController">
+  <children>
+    <Line endX="581.2665405273438" endY="1.0" startX="5.17072868347168" startY="-3.875" strokeType="CENTERED" strokeWidth="3.6">
+      <stroke>
+        <Color blue="0.749" green="0.749" red="0.749" fx:id="x1" />
+      </stroke>
+    </Line>
+    <Label fx:id="welcomeMsg" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-1.0" minWidth="-1.0" prefHeight="79.5" prefWidth="580.0" text="%com.pravat.meditrax.welcomemsg" textAlignment="JUSTIFY" textFill="#330025" textOverrun="ELLIPSIS" visible="true">
+      <effect>
+        <Glow>
+          <input>
+            <DropShadow />
+          </input>
+        </Glow>
+      </effect>
+      <font>
+        <Font name="System Bold" size="30.0" />
+      </font>
+    </Label>
+    <Label fx:id="addressLine1" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="37.0" prefWidth="580.0" text="address_1_place_holder" textAlignment="CENTER">
+      <font>
+        <Font size="18.0" fx:id="x2" />
+      </font>
+    </Label>
+    <Label fx:id="addressLine2" alignment="CENTER" contentDisplay="CENTER" font="$x2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="37.0" prefWidth="580.0" text="address_2_placeholder" textAlignment="CENTER" />
+    <Line endX="462.05938720703125" endY="2.999999761581421" startX="-112.0" startY="1.0" stroke="$x1" strokeType="CENTERED" strokeWidth="3.6" />
+  </children>
+</VBox>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<util:map id="queryMap">
+
+		<entry key="meditrax.getnxtsqval">
+			<value>
+				VALUES (NEXT VALUE FOR :seqNm)
+			</value>
+		</entry>
+		<entry key="meditrax.getprops">
+			<value>
+				SELECT KEY_ITM, VALUE_ITM FROM APP_CONFIG
+			</value>
+		</entry>
+		<entry key="meditrax.getconfigprop">
+			<value>
+				SELECT VALUE_ITM FROM APP_CONFIG where KEY_ITM=?
+			</value>
+		</entry>
+		<entry key="meditrax.updateconfigprop">
+			<value>
+				UPDATE APP_CONFIG SET VALUE_ITM = ? WHERE KEY_ITM = ?
+			</value>
+		</entry>
+		<entry key="meditrax.insertinitprops">
+			<value>
+				INSERT INTO APP_CONFIG(KEY_ITM, VALUE_ITM) VALUES (?, ?)
+			</value>
+		</entry>
+		<entry key="meditrax.adddrug">
+			<value>
+				INSERT INTO DRUGS(DRG_ID, DRG_NM, MFR, TYP)
+				VALUES (?, ?, ?, ?)
+			</value>
+		</entry>
+		<entry key="meditrax.adddrugbatch">
+			<value>
+				INSERT INTO DRUG_BATCH(DRUG_ID, BATCH_ID, UNIT_PP, UNIT_RP,
+				AVAIL_UNITS, EXP_DT)
+				VALUES (?, ?, ?, ?, ?, ?)
+			</value>
+		</entry>
+
+		<entry key="meditrax.updatedrugbatch">
+			<value>
+				UPDATE DRUG_BATCH
+				SET AVAIL_UNITS = ?
+				WHERE DRUG_ID = ? AND
+				BATCH_ID = ?
+			</value>
+		</entry>
+
+		<entry key="meditrax.removedrug">
+			<value>
+				DELETE FROM DRUGS WHERE DRG_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.removedrugdtl">
+			<value>
+				DELETE FROM DRUG_BATCH WHERE DRUG_ID = ?
+			</value>
+		</entry>
+
+		<!-- Update drug -->
+		<entry key="meditrax.updatedrg">
+			<value>
+				UPDATE DRUGS
+				SET DRG_NM= ?,
+				MFR = ?,
+				TYP = ?
+				WHERE DRG_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.getdrug">
+			<value>
+				SELECT D.DRG_ID, D.DRG_NM, D.MFR, D.TYP
+				FROM DRUGS D
+				WHERE D.DRG_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.drgreport">
+			<value>
+				SELECT ONE.DRUG_ID, ONE.DRG_NM, ONE.COUNT, ONE.EXP_DT
+				FROM
+				(SELECT DB.DRUG_ID, D.DRG_NM, SUM(DB.AVAIL_UNITS) COUNT, DB.EXP_DT
+				FROM DRUG_BATCH DB, DRUGS D
+				WHERE DB.DRUG_ID=D.DRG_ID
+				:drgwherecls:
+				:drgidcond:
+				GROUP BY DB.EXP_DT, DB.DRUG_ID, D.DRG_NM) ONE
+				:countcond:
+				ORDER BY
+				ONE.DRUG_ID, ONE.EXP_DT
+			</value>
+		</entry>
+		<!-- Search a drug details. This combine drugs and unit price -->
+		<entry key="meditrax.drugdtlsearch.byname">
+			<value>
+				SELECT D.DRG_ID, D.DRG_NM, D.MFR, D.TYP, DP.BATCH_ID,
+				DP.UNIT_PP, DP.UNIT_RP, DP.AVAIL_UNITS, DP.EXP_DT
+				FROM DRUGS D,
+				DRUG_BATCH DP
+				WHERE D.DRG_ID = DP.DRUG_ID
+				AND DP.AVAIL_UNITS > 0
+				AND LOWER(D.DRG_NM) LIKE '%:searchKey%'
+			</value>
+		</entry>
+		<entry key="meditrax.getbatchdtls">
+			<value>
+				SELECT DP.BATCH_ID, DP.UNIT_PP, DP.UNIT_RP, DP.AVAIL_UNITS,
+				DP.EXP_DT
+				FROM DRUG_BATCH DP
+				WHERE DP.DRUG_ID = ?
+			</value>
+		</entry>
+
+
+		<!-- Search a single drug. This does not return the available units -->
+		<entry key="meditrax.drugsearch.byname">
+			<value>
+				SELECT D.DRG_ID, D.DRG_NM, D.MFR, D.TYP
+				FROM DRUGS D
+				WHERE LOWER(D.DRG_NM) LIKE '%:searchKey%'
+			</value>
+		</entry>
+		<entry key="meditrax.insertparty">
+			<value>
+				INSERT INTO PARTY (PRTY_ID, PRTY_NM, PRTY_ADD, CNTCT_NO)
+				VALUES(?, ?, ?, ?)
+			</value>
+		</entry>
+		<entry key="meditrax.removeparty">
+			<value>
+				DELETE FROM PARTY WHERE PRTY_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.searchparty">
+			<value>
+				SELECT PRTY_ID, PRTY_NM, PRTY_ADD, CNTCT_NO
+				FROM PARTY
+				WHERE
+				LOWER(PRTY_NM) LIKE '%:searchString%'
+			</value>
+		</entry>
+
+		<entry key="meditrax.updateparty">
+			<value>
+				UPDATE PARTY
+				SET PRTY_NM = ?,
+				PRTY_ADD = ?,
+				CNTCT_NO = ?
+				WHERE
+				PRTY_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.purchasetx">
+			<value>
+				INSERT INTO PURCHASE_TRANSACTION (TRNSCT_ID, PRTY_ID, DATE,
+				DRUG_ID, DRG_BAT_ID, QTY, TOT_AMT, TX_TYPE)
+				VALUES(?, ?, ?, ?, ?,
+				?,?,?)
+			</value>
+		</entry>
+		<entry key="meditrax.purchaserpt">
+			<value>
+				SELECT A.TRNSCT_ID, A.DRUG_ID, B.PRTY_NM, C.DRG_NM, A.DATE,
+				A.QTY, A.TOT_AMT, A.TX_TYPE
+				FROM PURCHASE_TRANSACTION A, PARTY B,
+				DRUGS C
+				WHERE A.DATE BETWEEN ? AND ?
+				AND A.DRUG_ID = C.DRG_ID
+				AND
+				A.PRTY_ID = B.PRTY_ID
+			</value>
+		</entry>
+
+		<entry key="meditrax.insertsaletx">
+			<value>
+				INSERT INTO SALE_TRANSACTION
+				(TRNSCT_ID, PATIENT_NM,
+				PATIENT_AGE, DATE, DOCTOR_NM, TOT_AMT)
+				VALUES(?, ?, ?, ?, ?, ?)
+			</value>
+		</entry>
+		<entry key="meditrax.insertsalesdtl">
+			<value>
+				INSERT INTO SALE_DTLS
+				(ID, TRNSCT_ID, DRUG_ID, QTY, UNIT_PRC, DISC_PCT,
+				BATCH_ID)
+				VALUES(?, ?, ?, ?, ?, ?,?)
+			</value>
+		</entry>
+		<entry key="meditrax.updatebatchcount">
+			<value>
+				UPDATE DRUG_BATCH
+				SET AVAIL_UNITS = AVAIL_UNITS - ?
+				WHERE
+				BATCH_ID = ?
+			</value>
+		</entry>
+
+		<entry key="meditrax.fetchsaletx">
+			<value>
+				SELECT ST.TRNSCT_ID, ST.PATIENT_NM, ST.PATIENT_AGE,ST.DATE,
+				ST.DOCTOR_NM,
+				ST.TOT_AMT, SD.ID, SD.DRUG_ID, SD.QTY, SD.UNIT_PRC
+				FROM
+				SALE_TRANSACTION ST,SALE_DTLS SD
+				WHERE ST.TRNSCT_ID = SD.TRNSCT_ID
+				AND ST.TRNSCT_ID = ?
+			</value>
+		</entry>
+		<entry key="meditrax.fetchsalesrpt">
+			<value>
+				SELECT ST.TRNSCT_ID, ST.PATIENT_NM,
+				ST.PATIENT_AGE, ST.DATE,
+				ST.DOCTOR_NM,
+				ST.TOT_AMT
+				FROM SALE_TRANSACTION ST
+				WHERE ST.DATE BETWEEN
+				? AND ?
+			</value>
+		</entry>
+
+		<entry key="meditrax.fetchsaledtls">
+			<value>
+				SELECT S.ID, S.DRUG_ID, D.DRG_NM, S.QTY, S.UNIT_PRC
+				FROM SALE_DTLS S, DRUGS D
+				WHERE S.TRNSCT_ID = ?
+				AND S.DRUG_ID = D.DRG_ID
+			</value>
+		</entry>
+
+		<entry key="meditrax.getpurchasebatches">
+			<value>
+
+				SELECT DB.BATCH_ID, D.DRG_NM, D.DRG_ID, DB.UNIT_PP, DB.UNIT_RP, DB.AVAIL_UNITS,
+				DB.EXP_DT
+				FROM DRUG_BATCH DB, DRUGS D
+				WHERE DB.BATCH_ID IN(SELECT
+				DRG_BAT_ID FROM PURCHASE_TRANSACTION WHERE PRTY_ID = ? AND TX_TYPE =
+				? GROUP BY DRG_BAT_ID )
+				AND D.DRG_ID = DB.DRUG_ID
+			</value>
+		</entry>
+
+
+	</util:map>
+
+	<!-- <bean id="jobMgmtDataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close" lazy-init="true"> <property name="driverClassName" 
+		value="${awaf.jm.db.driver}" /> <property name="url" value="${awaf.jm.db.url}" 
+		/> <property name="username" value="${awaf.jm.db.username}" /> <property 
+		name="password" value="${awaf.jm.db.password}" /> <property name="initialSize" 
+		value="1" /> <property name="maxActive" value="10" /> </bean> -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${com.pravat.meditrax.bi.ds.driverClassName}" />
+		<property name="url" value="${com.pravat.meditrax.bi.ds.url}" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+		<!-- <property name="connectionProperties"> <props> <prop key="derby.language.sequence.preallocator">50</prop> 
+			</props> </property> -->
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="txManeger"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>
