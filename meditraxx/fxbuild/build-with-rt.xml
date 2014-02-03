@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<project name="meditraxx" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	<target name="init-fx-tasks">
+		<path id="fxant">
+			<filelist>
+				<file name="${java.home}\..\lib\ant-javafx.jar"/>
+				<file name="${java.home}\lib\jfxrt.jar"/>
+				<file name="${basedir}"/>
+			</filelist>
+		</path>
+	
+		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"      
+			uri="javafx:com.sun.javafx.tools.ant"
+			classpathref="fxant"/>
+	</target>
+	<target name="setup-staging-area">
+		<delete dir="externalLibs" />
+		<delete dir="project" />
+		<delete dir="projectRefs" />
+		
+		<mkdir dir="externalLibs" />
+		
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.org.aopalliance-sources-1.0.0.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.jms-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.asm-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.org.apache.commons.logging-1.1.1.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.instrument-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\fx">
+				<filename name="javafx-dialogs-0.0.4.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.core-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\extfx\target">
+				<filename name="extfx-0.3.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.web.portlet-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.beans-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.web.struts-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.aspects-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\other">
+				<filename name="commons-io-2.4.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\other">
+				<filename name="derby.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\other">
+				<filename name="zip4.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.web.servlet-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.org.aopalliance-1.0.0.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.orm-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\other">
+				<filename name="commons-collections-3.2.1.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.jdbc-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.transaction-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.expression-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\jfx-autocomplete-textfield\target">
+				<filename name="jfx-autocomplete-textfield-0.0.2-SNAPSHOT.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.instrument.tomcat-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.web-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.context.support-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Pravat\Softwares\eclipse\plugins">
+				<filename name="org.hamcrest.core_1.3.0.v201303031735.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.net.sf.cglib-2.2.0.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.org.apache.commons.lang-sources-2.1.0.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.context-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.aop-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Pravat\Softwares\eclipse\plugins\org.junit_4.11.0.v201303080030">
+				<filename name="junit.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.test-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="org.springframework.oxm-3.0.5.RELEASE.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\spring">
+				<filename name="com.springsource.org.apache.commons.lang-2.1.0.jar"/>	
+			</fileset>
+		</copy>
+		<copy todir="externalLibs">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditrax-lib\other">
+				<filename name="log4j-1.2.15.jar"/>	
+			</fileset>
+		</copy>
+		
+		<mkdir dir="project" />
+		<copy todir="project">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditraxx">
+				<include name="test/**" />
+			</fileset>
+		</copy>
+		<copy todir="project">
+			<fileset dir="C:\Users\PravatKumar\git\medit\meditraxx">
+				<include name="src/**" />
+			</fileset>
+		</copy>
+		
+		<mkdir dir="projectRefs" />
+	</target>
+	<target name='do-compile'>
+		<delete dir="build" />
+		<mkdir dir="build/src" />
+		<mkdir dir="build/libs" />
+		<mkdir dir="build/classes" />
+	
+		<!-- Copy project-libs references -->
+		<copy todir="build/libs">
+			<fileset dir="externalLibs">
+				<include name="com.springsource.org.apache.commons.lang-sources-2.1.0.jar"/>
+				<include name="org.springframework.web.struts-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.instrument-3.0.5.RELEASE.jar"/>
+				<include name="javafx-dialogs-0.0.4.jar"/>
+				<include name="org.springframework.beans-3.0.5.RELEASE.jar"/>
+				<include name="zip4.jar"/>
+				<include name="jfx-autocomplete-textfield-0.0.2-SNAPSHOT.jar"/>
+				<include name="org.springframework.context-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.web-3.0.5.RELEASE.jar"/>
+				<include name="extfx-0.3.jar"/>
+				<include name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
+				<include name="org.springframework.core-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.expression-3.0.5.RELEASE.jar"/>
+				<include name="derby.jar"/>
+				<include name="org.springframework.jms-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.asm-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.aop-3.0.5.RELEASE.jar"/>
+				<include name="com.springsource.org.apache.commons.lang-2.1.0.jar"/>
+				<include name="org.springframework.oxm-3.0.5.RELEASE.jar"/>
+				<include name="commons-collections-3.2.1.jar"/>
+				<include name="com.springsource.org.aopalliance-1.0.0.jar"/>
+				<include name="commons-io-2.4.jar"/>
+				<include name="org.springframework.jdbc-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.aspects-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.instrument.tomcat-3.0.5.RELEASE.jar"/>
+				<include name="log4j-1.2.15.jar"/>
+				<include name="org.springframework.web.servlet-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.transaction-3.0.5.RELEASE.jar"/>
+				<include name="com.springsource.org.aopalliance-sources-1.0.0.jar"/>
+				<include name="org.springframework.orm-3.0.5.RELEASE.jar"/>
+				<include name="junit.jar"/>
+				<include name="com.springsource.org.apache.commons.logging-1.1.1.jar"/>
+				<include name="org.springframework.web.portlet-3.0.5.RELEASE.jar"/>
+				<include name="com.springsource.net.sf.cglib-2.2.0.jar"/>
+				<include name="org.springframework.context.support-3.0.5.RELEASE.jar"/>
+				<include name="org.springframework.test-3.0.5.RELEASE.jar"/>
+			</fileset>
+		</copy>
+	
+		<!-- Copy project references -->
+	
+		<!-- Copy project sources itself -->
+		<copy todir="build/src">
+			<fileset dir="project/test">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="build/src">
+			<fileset dir="project/src">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	
+		<javac includeantruntime="false" source="1.7" target="1.7" srcdir="build/src" destdir="build/classes" encoding="Cp1252">
+			<classpath>
+				<fileset dir="build/libs">
+					<include name="*"/>
+				</fileset>
+				<filelist>
+					<file name="C:\Program Files\Java\jdk1.7.0_51\jre\lib\jfxrt.jar"/>
+				</filelist>
+			</classpath>
+		</javac>
+		
+		<!-- Copy over none Java-Files -->
+		<copy todir="build/classes">
+		<fileset dir="project/test">
+			<exclude name="**/*.java"/>
+		</fileset>
+		<fileset dir="project/src">
+			<exclude name="**/*.java"/>
+		</fileset>
+		</copy>
+	
+	
+	</target>
+	<target name="do-deploy" depends="setup-staging-area, do-compile, init-fx-tasks">
+		<delete file="dist"/>
+		<delete file="deploy" />
+		
+		<mkdir dir="dist" />
+		<mkdir dir="dist/libs" />
+		
+		<copy todir="dist/libs">
+			<fileset dir="externalLibs">
+				<include name="*" />
+			</fileset>
+		</copy>
+		
+		<jar destfile="dist/libs/meditraxx-preloader.jar">
+			<fileset dir="build/classes">
+				<include name="com/pravat/meditrax/MeditraxPreloader.class"/>
+			</fileset>
+		</jar>
+		
+		<mkdir dir="package/windows" />
+		 <copy todir="package/windows">
+		      <fileset dir="${basedir}/../resources/">
+		          <include name="*.*" />
+		      </fileset>
+		 </copy>
+		<fx:resources id="appRes">
+			<fx:fileset dir="dist" requiredFor="preloader"
+				includes="meditraxx-preloader.jar"/>
+			<fx:fileset dir="dist" includes="meditraxx.jar"/>
+			<fx:fileset dir="dist" includes="libs/*"/>
+			
+		</fx:resources> 
+		
+		<fx:application id="fxApplication"
+			name="Meditrax"
+			mainClass="com.pravat.meditrax.main.Meditrax"
+			preloaderClass="com.pravat.meditrax.MeditraxPreloader"
+			toolkit="fx"
+		/>
+	
+		<mkdir dir="build/classes/META-INF" />
+		
+		
+		
+		<fx:jar destfile="dist/meditraxx.jar">
+			<fx:application refid="fxApplication"/>
+			<fileset dir="build/classes">
+			<exclude name="com/pravat/meditrax/MeditraxPreloader.class" />
+			</fileset>
+			<fx:resources refid="appRes"/>
+			
+			<manifest>
+				<attribute name="Implementation-Vendor" value="Panda Technologies"/>
+				<attribute name="Implementation-Title" value="Meditrax"/>
+				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="SplashScreen-Image" value="images/app_splash.jpg"/>
+				<attribute name="JavaFX-Feature-Proxy" value="None"/>
+			</manifest>
+		</fx:jar>
+		
+	
+		<mkdir dir="deploy" />
+		<!-- Need to use ${basedir} because somehow the ant task is calculating the directory differently -->
+		<fx:deploy verbose="true"
+			embedJNLP="false"
+			extension="false"
+			includeDT="false"
+			offlineAllowed="true"
+			outdir="${basedir}/deploy"
+			outfile="meditraxx" nativeBundles="exe"
+			updatemode="background" >
+	
+			<fx:info title="meditraxx" vendor="Panda Technologies"/>
+			<fx:application refId="fxApplication"/>
+			<fx:resources refid="appRes"/>
+		</fx:deploy>
+		
+		
+	</target>
+</project>
