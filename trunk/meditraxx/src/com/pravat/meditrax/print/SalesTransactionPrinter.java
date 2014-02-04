@@ -22,13 +22,16 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 
 
 	public SalesTransactionPrinter(SaleTransactionPrintDomain transaction, StoreInfo storeInfo) {
-		super(transaction, storeInfo, 30, 9);
+		super(transaction, storeInfo, 9);
 	}
 	
 	
 	@Override
 	public int printDetails(Graphics graphics, PageFormat pf, int pageIndex, PrintDimension pd)  {
 		
+		if (pageIndex > 0) { // We have only one page, and 'page' is zero-based 
+			return NO_SUCH_PAGE;
+		}
 		SaleTransaction transaction = printDomain.getSaleTx();
 		// Print store details
 		SaleTransactionInfo info = transaction.getInfo();
@@ -45,7 +48,6 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		graphics.drawString("Invoice#:" + info.getTransactionId(), pd.getColumn(6), pd.getRow(2));
 		
 		graphics.drawString("Phone: " +storeInfo.getPhone(),  pd.getColumn(0), pd.getRow(3));
-//		graphics.drawLine(startX, getNextRow(), (int)pf.getWidth() - startX, getCurrRow());
 		graphics.drawLine(pd.getStartCol(), pd.getRow(3) + 5, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(3) + 5);
 
 		graphics.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -61,6 +63,7 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fillRect(pd.getStartCol(), pd.getRow(7) - 13, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getHeightPerRow());
 		graphics.setColor(Color.BLACK);
+		
 		//graphics.drawLine(pd.getStartCol(), pd.getRow(7) - 13, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(7) - 13);
 		graphics.drawString("Item#",  pd.getColumn(0), pd.getRow(7));
 		graphics.drawString("Desc",  pd.getColumn(1), pd.getRow(7));
@@ -123,7 +126,7 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		domain.setSaleTx(createTestData);
 		SalesTransactionPrinter printer = new SalesTransactionPrinter(domain, storeInfo2);
 		try {
-			printer.printData(true);
+			printer.printData(true, "Sale_Receipt_");
 		} catch (PrinterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

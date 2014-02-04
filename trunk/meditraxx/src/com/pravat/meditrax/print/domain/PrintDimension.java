@@ -4,8 +4,8 @@ import java.awt.print.PageFormat;
 
 public class PrintDimension {
 
-	int leftMargin;
-	int topMargin;
+	public static int LEFT_MARGIN =  20;
+	public static int TOP_MARGIN =  40;
 	int widthPerColumn;
 	int heightPerRow;
 	public int getHeightPerRow() {
@@ -16,8 +16,6 @@ public class PrintDimension {
 	
 	public PrintDimension(PageFormat pf, int apprxRows, int apprxCols) {
 		width = pf.getWidth();
-		leftMargin = 20;
-		topMargin = 40;
 		
 		int apprxTotCols = apprxCols; // refer to doc
 		int availablePrintWid = (int)(width - 10 - 10);// let margin 10 + right margin 10
@@ -28,14 +26,14 @@ public class PrintDimension {
 	}
 	
 	public int getColumn(int index) {
-		return leftMargin + index * widthPerColumn;
+		return LEFT_MARGIN =  20 + index * widthPerColumn;
 	}
 	public int getRow(int index) {
-		return topMargin + index * heightPerRow;
+		return TOP_MARGIN + index * heightPerRow;
 	}
 	
 	public int getStartCol() {
-		return leftMargin;
+		return LEFT_MARGIN =  20;
 	}
 	public double getWidth() {
 		return width;

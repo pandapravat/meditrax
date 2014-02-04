@@ -255,7 +255,7 @@ public class NewSalesController implements Initializable {
 					SaleTransactionPrintDomain domain = new SaleTransactionPrintDomain();
 					domain.setSaleTx(saleTransaction);
 					SalesTransactionPrinter printer = new SalesTransactionPrinter(domain, appService.getStoreInfo());
-					printer.printData(false);
+					printer.printData(false, "Sale_Receipt_");
 				}
 				clearWin();
 
