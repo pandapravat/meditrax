@@ -148,7 +148,7 @@ public class SalesReportController implements Initializable {
 				printDomain.setTableView(table);
 				SaleReportPrinter printer = new SaleReportPrinter(printDomain, appService.getStoreInfo());
 				try {
-					printer.printData(false);
+					printer.printData(false,"Sale_Report_");
 				} catch (PrinterException e) {
 					// Show error if there is a problem while printing
 					Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), "There was a problem while printing the document. Please try again later", "Error!!");
