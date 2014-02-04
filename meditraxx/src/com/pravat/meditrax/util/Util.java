@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class Util {
 
-//	static Rectangle2D rect = Screen.getPrimary().getVisualBounds();
+	//	static Rectangle2D rect = Screen.getPrimary().getVisualBounds();
 	public static URL getAsResource(String name) {
 		URL url = Thread.currentThread().getContextClassLoader().getResource(name);
 		return url;
@@ -32,7 +32,20 @@ public class Util {
 		return resourceAsStream;
 	}
 
-	
+	@SuppressWarnings("deprecation")
+	public static void setToEndOfDay(Date targetDate) {
+
+		targetDate.setHours(23);
+		targetDate.setMinutes(59);
+		targetDate.setSeconds(59);
+	}
+	@SuppressWarnings("deprecation")
+	public static void setToStartOfDay(Date targetDate) {
+		targetDate.setHours(0);
+		targetDate.setMinutes(0);
+		targetDate.setSeconds(0);
+	}
+
 	/*public static double getAvailableWidth( int pct, DimType dimType) {
 		double returnVal = 0;
 		switch(dimType) {
@@ -97,15 +110,15 @@ public class Util {
 	public static Set<String> getAllStyleKeys() {
 		return backMap.keySet();
 	}
-	
+
 	public static void prepareExit() {
 		ApplicationContextUtil.destroyContext();
 	}
-	
+
 	public static String calculatePrice(double rawUnitPrice, int quantity, int discount) {
 		double totalPrice = Util.getInMoneyFormat(((double)rawUnitPrice) * quantity);
 		totalPrice = totalPrice - (totalPrice*discount)/100;
-		
+
 		return getInMoneyFormatString(totalPrice);
 	}
 

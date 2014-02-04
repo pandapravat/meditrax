@@ -65,8 +65,8 @@ public class Constants {
 	public static final int STORE_NM_MAX_LEN = 30;
 	public static final int ADD_LN1_MAX_LEN = 40;
 	public static final int ADD_LN2_MAX_LEN = 40;
-	public static final int NM_MAX_LEN = 40;
-	public static final int ADD_MAX_LEN = 60;
+	public static final int NM_MAX_LEN = 20;
+	public static final int ADRS_MAX_LEN = 60;
 	public static final int MAX_SALE_ENTRIES = 10;
 	public static final int MIN_PWD_LEN = 6;
 	public static final int MAX_PWD_LEN = 20;

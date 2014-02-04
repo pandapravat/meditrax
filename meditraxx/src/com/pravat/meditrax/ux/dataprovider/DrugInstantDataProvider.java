@@ -23,4 +23,14 @@ public class DrugInstantDataProvider implements InstantDataProvider<Drug>{
 		}
 		return list;
 	}
+	
+	public DrugInstantDataProvider() {
+		
+	}
+	
+	public DrugInstantDataProvider(boolean fetchUnAvlbl) {
+		this.fetchUnAvlbl = fetchUnAvlbl;
+	}
+	
+	boolean fetchUnAvlbl = false;
 }

@@ -21,11 +21,17 @@ import com.pravat.meditrax.print.domain.PrintDomain;
 import com.pravat.meditrax.util.Util;
 
 public abstract class BasePrinter<T extends PrintDomain> implements Printable {
+	
+	Font PG_TITLE = new Font("Tahoma", Font.BOLD, 14);
+	Font TITLE2 = new Font("Tahoma", Font.BOLD, 12);
+	Font TITLE3 = new Font("Tahoma", Font.BOLD, 11);
+	Font PG_DATA = new Font("Tahoma", Font.PLAIN, 10);
+	Font TAB_HEADER = new Font("Tahoma", Font.BOLD, 10);
 
 	T printDomain;
 	StoreInfo storeInfo;
-	private int rowsPerpage;
-	private int colsPerPage;
+	protected int rowsPerpage;
+	protected int colsPerPage;
 	
 	public BasePrinter(T printDomain, StoreInfo info, int rowsPerSheet, int colsPerPage) {
 		this.rowsPerpage = rowsPerSheet;
@@ -47,9 +53,9 @@ public abstract class BasePrinter<T extends PrintDomain> implements Printable {
 	
 	@Override
 	public int print(Graphics graphics, PageFormat pf, int pageIndex) {
-		if (pageIndex > 0) { /* We have only one page, and 'page' is zero-based */
+		/*if (pageIndex > 0) {  We have only one page, and 'page' is zero-based 
 			return NO_SUCH_PAGE;
-		}
+		}*/
 
 		// fonts
 		graphics.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -61,12 +67,10 @@ public abstract class BasePrinter<T extends PrintDomain> implements Printable {
 		g2d.translate(pf.getImageableX(), pf.getImageableY());
 		
 		PrintDimension printDimension = new PrintDimension(pf, rowsPerpage, colsPerPage);
-		this.printDetails(graphics, pf, pageIndex, printDimension);
+		return this.printDetails(graphics, pf, pageIndex, printDimension);
 		
-		/* tell the caller that this page is part of the printed document */
-		return PAGE_EXISTS;
 	}
 	
-	public abstract void printDetails(Graphics graphics, PageFormat pf, int pageIndex, PrintDimension dim);
+	public abstract int printDetails(Graphics graphics, PageFormat pf, int pageIndex, PrintDimension dim);
 	
 }

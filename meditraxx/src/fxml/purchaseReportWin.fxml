@@ -44,7 +44,7 @@
           <children>
             <Button mnemonicParsing="false" onAction="#onHomeButtonClick" prefHeight="21.0" prefWidth="76.0" text="Home" />
             <!-- <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="76.0" text="View Details" onAction="#viewTransactionDetails"/> -->
-            <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="76.0" text="Print" />
+            <Button mnemonicParsing="false" prefHeight="21.0" prefWidth="76.0" text="Print" onAction="#onPrintButtonClick"/>
           </children>
         </HBox>
       </children>
