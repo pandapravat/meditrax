@@ -65,8 +65,8 @@ public class AddPartyController implements Initializable {
 		}
 		// party address is optional, but can't more than specified characters
 		if(!Validator.isBlank(partyAddress.getText())) {
-			if(partyAddress.getText().length() > Constants.ADD_MAX_LEN) {
-				errors.add("Party address can't be more than "  + Constants.ADD_MAX_LEN + "  characters");
+			if(partyAddress.getText().length() > Constants.ADRS_MAX_LEN) {
+				errors.add("Party address can't be more than "  + Constants.ADRS_MAX_LEN + "  characters");
 			}
 		}
 		

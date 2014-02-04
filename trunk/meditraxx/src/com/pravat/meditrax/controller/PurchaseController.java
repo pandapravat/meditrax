@@ -111,6 +111,13 @@ public class PurchaseController implements Initializable{
 			mainInstance.handleHomeClick(new ActionEvent());
 		}
 	}
+	@FXML
+	public void onPrintButtonClick(ActionEvent ke) {
+		DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ke), "Are you sure to print?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
+		if(DialogResponse.YES.equals(confirmResp)) {
+			//todo
+		}
+	}
 	
 
 	

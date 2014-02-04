@@ -12,6 +12,7 @@ import com.pravat.meditrax.bi.dao.SalesDao;
 import com.pravat.meditrax.bi.domain.SaleDetails;
 import com.pravat.meditrax.bi.domain.SaleTransaction;
 import com.pravat.meditrax.bi.domain.SaleTransactionReport;
+import com.pravat.meditrax.util.Util;
 
 @Controller
 @Transactional
@@ -40,16 +41,11 @@ public class SalesServiceImpl implements SalesService {
 	}
 
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public SaleTransactionReport getSalesReport(Date fromDateVal, Date toDateVal) {
 		// set the from date as start of day and end date as end of the day
-		fromDateVal.setHours(0);
-		fromDateVal.setMinutes(0);
-		fromDateVal.setSeconds(0);
-		toDateVal.setHours(23);
-		fromDateVal.setMinutes(59);
-		fromDateVal.setSeconds(59);
+		Util.setToStartOfDay(fromDateVal);
+		Util.setToEndOfDay(toDateVal);
 		return salesDao.getSalesReport(fromDateVal, toDateVal);
 	}
 

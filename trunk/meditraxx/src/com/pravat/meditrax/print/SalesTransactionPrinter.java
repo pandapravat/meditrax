@@ -27,7 +27,7 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 	
 	
 	@Override
-	public void printDetails(Graphics graphics, PageFormat pf, int pageIndex, PrintDimension pd)  {
+	public int printDetails(Graphics graphics, PageFormat pf, int pageIndex, PrintDimension pd)  {
 		
 		SaleTransaction transaction = printDomain.getSaleTx();
 		// Print store details
@@ -103,6 +103,7 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		graphics.drawLine(pd.getStartCol(), pd.getRow(pd.getlastRow() - 3) + 5, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(pd.getlastRow() - 3) + 5);
 		graphics.drawString("Thank you for your business!!", pd.getColumn(0), pd.getRow(pd.getlastRow() - 2));
 		
+		return  PAGE_EXISTS;
 	}
 
 	String storeName = "Good Luck Medicines";

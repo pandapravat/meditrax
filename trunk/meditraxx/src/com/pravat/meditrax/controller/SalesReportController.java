@@ -6,12 +6,15 @@
 
 package com.pravat.meditrax.controller;
 
+import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,12 +27,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.Dialogs.DialogOptions;
+import javafx.scene.control.Dialogs.DialogResponse;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Dialogs.DialogOptions;
-import javafx.scene.control.Dialogs.DialogResponse;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -41,12 +44,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.CollectionUtils;
 
+import com.pravat.meditrax.bi.ApplicationService;
 import com.pravat.meditrax.bi.SalesService;
 import com.pravat.meditrax.bi.dao.SalesDao;
 import com.pravat.meditrax.bi.domain.SaleDetails;
 import com.pravat.meditrax.bi.domain.SaleTransactionInfo;
 import com.pravat.meditrax.bi.domain.SaleTransactionReport;
 import com.pravat.meditrax.main.Meditrax;
+import com.pravat.meditrax.print.SaleReportPrinter;
+import com.pravat.meditrax.print.domain.SaleReportPrintDomain;
 import com.pravat.meditrax.util.ApplicationContextUtil;
 import com.pravat.meditrax.util.Constants;
 import com.pravat.meditrax.util.PropertyLoader;
@@ -76,8 +82,9 @@ public class SalesReportController implements Initializable {
 	@FXML TableColumn<SaleReportTableRow, String> doctorsName;
 	@FXML Button goButton;
 
-	
+
 	SalesService salesService = ApplicationContextUtil.getInstance(SalesService.class);
+	ApplicationService appService = ApplicationContextUtil.getInstance(ApplicationService.class);
 	public Button getGoButton() {
 		return goButton;
 	}
@@ -115,15 +122,61 @@ public class SalesReportController implements Initializable {
 			Dialogs.showWarningDialog(Meditrax.getPrimaryStage(), "Please select a transaction to view details.", "View Details");
 		}
 	}
-	
+
 	@FXML public void onHomeButtonClick(ActionEvent ae) {
 		DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ae), "Are you sure to cancel?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
 		if(DialogResponse.YES.equals(confirmResp)) {
-			
+
 			mainInstance.handleHomeClick(new ActionEvent());
 		}
 	}
-	
+
+	@FXML public void onPrintButtonAction(ActionEvent ae) {
+		Date fromDateVal = fromDate.getValue();
+		Date toDateVal = toDate.getValue();
+		Set<String> errors = checkForErrors();
+		// If there are no errors, ask for print confirmation and send to the printer
+		if(CollectionUtils.isEmpty(errors)) {
+
+			DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ae), "Are you sure to print?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
+			if(DialogResponse.YES.equals(confirmResp)) {
+				Util.setToStartOfDay(fromDateVal);
+				Util.setToEndOfDay(toDateVal);
+				SaleReportPrintDomain printDomain = new SaleReportPrintDomain();
+				printDomain.setStartDate(fromDateVal);
+				printDomain.setEndDate(toDateVal);
+				printDomain.setTableView(table);
+				SaleReportPrinter printer = new SaleReportPrinter(printDomain, appService.getStoreInfo());
+				try {
+					printer.printData(false);
+				} catch (PrinterException e) {
+					// Show error if there is a problem while printing
+					Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), "There was a problem while printing the document. Please try again later", "Error!!");
+				}
+			}
+		} else {
+			Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), Util.getErrorString(errors), "Please correct the following errors!!", "Error");
+		}
+	}
+
+	private Set<String> checkForErrors() {
+		Set<String> errorList = new HashSet<>();
+
+
+		if(null == fromDate.getValue()) {
+			errorList.add("Invalid from date");
+		}
+		if(null == toDate.getValue()) {
+			errorList.add("Invalid to date");
+		}
+
+		if(CollectionUtils.isEmpty(table.getItems())) {
+			errorList.add("Nothing to print..");
+		}	
+		return errorList;
+
+	}
+
 	@FXML public void showFilterData(ActionEvent ae) {
 		Date fromDateVal = fromDate.getValue();
 		Date toDateVal = toDate.getValue();
@@ -135,7 +188,7 @@ public class SalesReportController implements Initializable {
 
 				List<SaleTransactionInfo> salesTxList = salesReport.getSalesTxList();
 				if(!CollectionUtils.isEmpty(salesTxList)) {
-					
+
 					double total = 0;
 					int count = 0;
 					transactionData.clear();
