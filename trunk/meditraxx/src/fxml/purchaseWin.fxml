@@ -53,7 +53,7 @@
                 <Label minWidth="-Infinity" text="PRTY ID:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <TextField fx:id="partyIdText" disable="true" editable="false" prefHeight="24.0" prefWidth="279.0" promptText="Party Id" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Label minWidth="-Infinity" text="ADRS:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <TextArea fx:id="partyAddress" prefHeight="146.0"editable="false"  prefWidth="279.0" promptText="Address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextArea fx:id="partyAddress" prefHeight="146.0" disable="true"  prefWidth="279.0" promptText="Address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Label minWidth="-Infinity" prefHeight="22.0" prefWidth="-1.0" text="PUR DATE:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                 <DatePicker fx:id="datePicker" prefWidth="213.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
               </children>

@@ -1,9 +1,12 @@
 package com.pravat.meditrax.controller;
 
+import java.awt.print.PrinterException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -16,11 +19,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.Dialogs.DialogOptions;
+import javafx.scene.control.Dialogs.DialogResponse;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Dialogs.DialogOptions;
-import javafx.scene.control.Dialogs.DialogResponse;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
@@ -28,10 +31,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.CollectionUtils;
 
+import com.pravat.meditrax.bi.ApplicationService;
 import com.pravat.meditrax.bi.dao.PurchaseDao;
 import com.pravat.meditrax.bi.domain.PurchaseTransaction.PUR_TX_TYP;
 import com.pravat.meditrax.bi.domain.PurchaseTransactionReport;
 import com.pravat.meditrax.main.Meditrax;
+import com.pravat.meditrax.print.PurchaseReportPrinter;
+import com.pravat.meditrax.print.domain.PurchaseReportPrintDomain;
 import com.pravat.meditrax.util.ApplicationContextUtil;
 import com.pravat.meditrax.util.Util;
 import com.pravat.meditrax.util.UxUtils;
@@ -57,6 +63,8 @@ public class PurchaseReportController implements Initializable{
 	@FXML Button goButton;
 	
 	ObservableList<PurchaseReportTableRow> tableData = FXCollections.observableArrayList();
+	ApplicationService appService = ApplicationContextUtil.getInstance(ApplicationService.class);
+	
 	@FXML public void onHomeButtonClick(ActionEvent ae) {
 		DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ae), "Are you sure?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
 		if(DialogResponse.YES.equals(confirmResp)) {
@@ -65,6 +73,51 @@ public class PurchaseReportController implements Initializable{
 		}
 	}
 	
+	@FXML public void onPrintButtonClick(ActionEvent ae) {
+		Date fromDateVal = fromDate.getValue();
+		Date toDateVal = toDate.getValue();
+		Set<String> errors = checkForErrors();
+		if(CollectionUtils.isEmpty(errors)) {
+
+			DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ae), "Are you sure to print?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
+			if(DialogResponse.YES.equals(confirmResp)) {
+				Util.setToStartOfDay(fromDateVal);
+				Util.setToEndOfDay(toDateVal);
+				PurchaseReportPrintDomain printDomain = new PurchaseReportPrintDomain();
+				printDomain.setStartDate(fromDateVal);
+				printDomain.setEndDate(toDateVal);
+				printDomain.setTableView(table);
+				printDomain.setTotalprice(totalSale.getText());
+				PurchaseReportPrinter printer = new PurchaseReportPrinter(printDomain, appService.getStoreInfo());
+				try {
+					printer.printData(false,"Purchase_Report_");
+				} catch (PrinterException e) {
+					// Show error if there is a problem while printing
+					Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), "There was a problem while printing the document. Please try again later", "Error!!");
+				}
+			}
+		} else {
+			Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), Util.getErrorString(errors), "Please correct the following errors!!", "Error");
+		}
+	}
+	
+	private Set<String> checkForErrors() {
+		Set<String> errorList = new HashSet<>();
+
+
+		if(null == fromDate.getValue()) {
+			errorList.add("Invalid from date");
+		}
+		if(null == toDate.getValue()) {
+			errorList.add("Invalid to date");
+		}
+
+		if(CollectionUtils.isEmpty(table.getItems())) {
+			errorList.add("Nothing to print..");
+		}	
+		return errorList;
+	}
+
 	@SuppressWarnings("deprecation")
 	@FXML public void showFilterData(ActionEvent ae) {
 		Date fromDateVal = fromDate.getValue();
