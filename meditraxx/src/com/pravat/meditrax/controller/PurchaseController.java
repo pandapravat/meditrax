@@ -113,10 +113,7 @@ public class PurchaseController implements Initializable{
 	}
 	@FXML
 	public void onPrintButtonClick(ActionEvent ke) {
-		DialogResponse confirmResp = Dialogs.showConfirmDialog(UxUtils.getStage(ke), "Are you sure to print?", "Are you sure?", "Confirm", DialogOptions.YES_NO);
-		if(DialogResponse.YES.equals(confirmResp)) {
-			//todo
-		}
+		Dialogs.showInformationDialog(UxUtils.getStage(ke), "Feature not available!!");
 	}
 	
 
