@@ -48,7 +48,7 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		graphics.drawString("Invoice#:" + info.getTransactionId(), pd.getColumn(6), pd.getRow(2));
 		
 		graphics.drawString("Phone: " +storeInfo.getPhone(),  pd.getColumn(0), pd.getRow(3));
-		graphics.drawLine(pd.getStartCol(), pd.getRow(3) + 5, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(3) + 5);
+		graphics.drawLine(pd.getStartCol(), pd.getRow(3) + 5, (int)pd.getWidth() - pd.getStartCol(), pd.getRow(3) + 5);
 
 		graphics.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		
@@ -96,14 +96,14 @@ public class SalesTransactionPrinter extends BasePrinter<SaleTransactionPrintDom
 		}
 		String totalS = getInMoneyFormatString(total);
 		graphics.setFont(new Font("Tahoma", Font.BOLD, 10));
-		graphics.drawLine(pd.getStartCol(), pd.getRow(rowCount) + 5, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(rowCount) + 5);
+		graphics.drawLine(pd.getStartCol(), pd.getRow(rowCount) + 5, (int)pd.getWidth() - pd.getStartCol(), pd.getRow(rowCount) + 5);
 		graphics.drawString("S.Total: Rs",  pd.getColumn(7), pd.getRow(rowCount+1));
 		graphics.drawString(totalS,  pd.getColumn(8), pd.getRow(rowCount+1));
 		graphics.drawString("G.Total: Rs",  pd.getColumn(7), pd.getRow(rowCount+2));
 		graphics.drawString(totalS,  pd.getColumn(8), pd.getRow(rowCount+2));
 		
 		graphics.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		graphics.drawLine(pd.getStartCol(), pd.getRow(pd.getlastRow() - 3) + 5, (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(pd.getlastRow() - 3) + 5);
+		graphics.drawLine(pd.getStartCol(), pd.getRow(pd.getlastRow() - 3) + 5, (int)pd.getWidth() - pd.getStartCol(), pd.getRow(pd.getlastRow() - 3) + 5);
 		graphics.drawString("Thank you for your business!!", pd.getColumn(0), pd.getRow(pd.getlastRow() - 2));
 		
 		return  PAGE_EXISTS;

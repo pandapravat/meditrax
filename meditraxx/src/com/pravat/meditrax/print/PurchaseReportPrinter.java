@@ -43,7 +43,7 @@ public class PurchaseReportPrinter extends BasePrinter<PurchaseReportPrintDomain
 			graphics.drawString(storeInfo.getStoreName(), pd.getColumn(0), pd.getRow(0));
 
 			graphics.setFont(PG_TITLE);
-			graphics.drawString("PURCHASE REPORT REPORT", pd.getColumn(7), pd.getRow(0));
+			graphics.drawString("PURCHASE REPORT", pd.getColumn(7), pd.getRow(0));
 
 			graphics.setFont(PG_DATA);
 			graphics.drawString(storeInfo.getAddress1(), pd.getColumn(0), pd.getRow(1));
@@ -93,7 +93,7 @@ public class PurchaseReportPrinter extends BasePrinter<PurchaseReportPrintDomain
 		}
 		// Print the footer only for the last row
 		if(maxRow == items.size() - 1) {
-			graphics.drawLine(pd.getStartCol(), pd.getRow(tableStartRow + loopCount), (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(tableStartRow + loopCount));
+			graphics.drawLine(pd.getStartCol(), pd.getRow(tableStartRow + loopCount), (int)pd.getWidth() - pd.getStartCol(), pd.getRow(tableStartRow + loopCount));
 			
 			graphics.drawString("Total: " + printDomain.getTotalprice(), pd.getColumn(9), pd.getRow(tableStartRow + loopCount + 1));
 		}

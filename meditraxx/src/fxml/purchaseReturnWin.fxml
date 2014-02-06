@@ -49,11 +49,11 @@
                 </Label>
                 <AutoCompleteTextField fx:id="partyNameSrch" prefHeight="24.0" prefWidth="279.0" promptText="Search Party.." GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                 <Label minWidth="-Infinity" text="NAME:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <TextField fx:id="partyNameText" prefHeight="24.0" prefWidth="279.0" promptText="Party Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="partyNameText" prefHeight="24.0" prefWidth="279.0" promptText="Party Name" GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"/>
                 <Label minWidth="-Infinity" text="PRTY ID:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <TextField fx:id="partyIdText" disable="true" prefHeight="24.0" prefWidth="279.0" promptText="Party Id" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Label minWidth="-Infinity" text="ADRS:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <TextArea fx:id="partyAddress" maxHeight="-Infinity" prefHeight="210.0" prefWidth="129.0" promptText="Address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextArea fx:id="partyAddress" maxHeight="-Infinity" prefHeight="210.0" prefWidth="129.0" promptText="Address" editable="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
