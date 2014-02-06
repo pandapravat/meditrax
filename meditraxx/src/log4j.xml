@@ -11,8 +11,8 @@
 	</appender>
 
 	<appender name="file" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="${user.home}/logs/meditrax.log" />
-		<param name="MaxFileSize" value="4096KB" />
+		<param name="File" value="${user.home}/meditrax/logs/meditrax.log" />
+		<param name="MaxFileSize" value="10MB" />
 		<param name="MaxBackupIndex" value="10" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d %p [%c] - %m%n" />
@@ -25,7 +25,8 @@
 
 	<root>
 		<priority value="INFO" />
-		<appender-ref ref="ConsoleAppender" />
+		<!-- <appender-ref ref="ConsoleAppender" /> -->
+		<appender-ref ref="file" />
 	</root>
 
 </log4j:configuration>
