@@ -19,6 +19,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +30,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -351,13 +353,22 @@ public class MainController implements Initializable {
 		try {
 			load = (Parent) fxmlLoader.load();
 			// make the stage modal
-			Stage stage = new Stage(StageStyle.UTILITY);
+			Stage stage = new Stage(StageStyle.DECORATED);
 			//			stage.initModality(Modality.WINDOW_MODAL);
 			//		    stage.initOwner(Meditrax.getPrimaryStage());
 			stage.setScene(new Scene(load));
-			stage.setResizable(false);
+//			stage.setResizable(false);
+			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			// full screens
+			stage.setX(primaryScreenBounds.getMinX());
+			stage.setY(primaryScreenBounds.getMinY());
+			stage.setWidth(primaryScreenBounds.getWidth());
+			stage.setHeight(primaryScreenBounds.getHeight());
 			stage.setTitle("SQL Editor..");
 			stage.show();
+			
+			SuperAdminController controller = fxmlLoader.getController();
+			controller.additionalInit();
 		} catch (IOException e) {
 			log.error("Could not load showQueryView", e);
 			Dialogs.showErrorDialog(Meditrax.getPrimaryStage(), "An Error Occurred while loading showQueryView stage", "Error!!");

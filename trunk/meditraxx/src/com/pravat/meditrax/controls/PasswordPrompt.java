@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import com.pravat.meditrax.main.Meditrax;
+import com.pravat.meditrax.util.Util;
 import com.pravat.meditrax.util.UxUtils;
 
 public final class PasswordPrompt {
@@ -24,12 +26,13 @@ public final class PasswordPrompt {
 	
 	public  String show(Stage owner, String  optionalMessage) {
 		
-		Stage stage = new Stage(StageStyle.UTILITY);
+		Stage stage = new Stage(StageStyle.DECORATED);
 		stage.initModality(Modality.APPLICATION_MODAL);
 	    stage.initOwner(Meditrax.getPrimaryStage());
 		stage.setScene(new Scene(showGUI(optionalMessage), 350, 200));
 		stage.setResizable(false);
 		stage.centerOnScreen();
+		stage.getIcons().add(new Image(Util.getAsInputStream("images/meditrax.png")));
 		stage.setTitle("Meditrax - Enter password");
 		stage.showAndWait();
 		

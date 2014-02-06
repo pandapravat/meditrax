@@ -6,11 +6,13 @@
 
 package com.pravat.meditrax.main;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import javafx.application.Application;
 import javafx.application.Preloader;
@@ -120,8 +122,7 @@ public class Meditrax extends Application {
 			stage.setResizable(false);
 			stage.show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			writeExceptionStack(e);
 		}
 	}
 
@@ -206,9 +207,7 @@ public class Meditrax extends Application {
 			returnCode =  INTITIALIZED;
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			writeExceptionStack(e);
-
 			SQLException se = getSQLExceptionIfAny(e);
 			if(null == se) {
 				returnCode = OTHER_ERROR;
@@ -219,36 +218,7 @@ public class Meditrax extends Application {
 					returnCode = NOT_INIITIALIZED;
 				}
 
-			}/*
-			if(e instanceof DataAccessException) {
-				DataAccessException dae = (DataAccessException) e;
-				Throwable mostSpecificCause = dae.getMostSpecificCause();
-				if(mostSpecificCause instanceof StandardException) {
-					StandardException sqlException = (StandardException) mostSpecificCause;
-					int errorCode = sqlException.getErrorCode();
-					if(40000 == errorCode) { // when another instance is running
-						returnCode = DUPLICATE_INSTANCE;
-					}
-					else if("42X05".equals(sqlException.getSQLState())){
-						returnCode = NOT_INIITIALIZED;
-					}
-				} else if(mostSpecificCause instanceof SQLException) {
-
-					SQLException sqlException = (SQLException) mostSpecificCause;
-					if(40000 == sqlException.getErrorCode()) { // when another instance is running
-						returnCode = DUPLICATE_INSTANCE;
-					}
-				}
-
-			}  
-			else if(e instanceof CannotCreateTransactionException) {
-
-				CannotCreateTransactionException exception = (CannotCreateTransactionException) e;
-
-				Throwable mostSpecificCause = exception.getMostSpecificCause();
-
-				returnCode = OTHER_ERROR;
-			}*/
+			}
 		}
 
 		setPreloaderNotification(0.7);
@@ -269,13 +239,16 @@ public class Meditrax extends Application {
 	}
 
 
+	// writes exception trace to a text file
 	private void writeExceptionStack(Exception e) {
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(System.getProperty("user.home") + "/meditraxStartUpErr.txt", true);
+			File file = new File(System.getProperty("user.home") + "/meditrax/startUpErr.txt");
+			file.getParentFile().mkdirs();
+			fileWriter = new FileWriter(file, true);
 			fileWriter.write("============================================\n");
-			fileWriter.write(Calendar.getInstance().toString());
-			fileWriter.write("\n========================================");
+			fileWriter.write(Util.getDateTimeString(new Date()));
+			fileWriter.write("\n========================================\n");
 			e.printStackTrace(new PrintWriter(fileWriter));
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -288,6 +261,11 @@ public class Meditrax extends Application {
 				}
 		}
 	}
+	
+	/*public static void main(String[] args) {
+		File file = new File(System.getProperty("user.home") + "/meditrax/startUpErr.txt");
+		file.getParentFile().mkdirs();
+	}*/
 
 	public static final int INTITIALIZED = 0;
 	public static final int NOT_INIITIALIZED = 1;
