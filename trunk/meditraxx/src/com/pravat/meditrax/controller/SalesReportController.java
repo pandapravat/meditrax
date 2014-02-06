@@ -146,6 +146,7 @@ public class SalesReportController implements Initializable {
 				printDomain.setStartDate(fromDateVal);
 				printDomain.setEndDate(toDateVal);
 				printDomain.setTableView(table);
+				printDomain.setTotalAmount(totalSale.getText());
 				SaleReportPrinter printer = new SaleReportPrinter(printDomain, appService.getStoreInfo());
 				try {
 					printer.printData(false,"Sale_Report_");

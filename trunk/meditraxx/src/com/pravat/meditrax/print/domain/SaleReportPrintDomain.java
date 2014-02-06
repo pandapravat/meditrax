@@ -12,7 +12,14 @@ public class SaleReportPrintDomain implements PrintDomain {
 	Date startDate;
 	Date endDate;
 	TableView<SaleReportTableRow> tableView;
+	String totalAmount;
 	
+	public String getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(String totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 	public Date getStartDate() {
 		return startDate;
 	}

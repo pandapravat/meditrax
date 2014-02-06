@@ -21,8 +21,6 @@ import com.pravat.meditrax.ux.domain.SaleReportTableRow;
 
 public class SaleReportPrinter extends BasePrinter<SaleReportPrintDomain>{
 
-	double total = 0;
-	int lastRecordFetched;
 	
 	Map<Integer, TableRecordBounds> pageIndexToRecordStartMap = new HashMap<Integer, TableRecordBounds>();
 	public SaleReportPrinter(SaleReportPrintDomain printDomain, StoreInfo info) {
@@ -87,18 +85,15 @@ public class SaleReportPrinter extends BasePrinter<SaleReportPrintDomain>{
 				graphics.drawString(row.getDts().toString(), pd.getColumn(2), pd.getRow(tableStartRow + loopCount));
 				graphics.drawString(row.getPatientName(), pd.getColumn(4), pd.getRow(tableStartRow + loopCount));
 				graphics.drawString(row.getDoctorsName(), pd.getColumn(6), pd.getRow(tableStartRow + loopCount));
-				total += row.getAmount();
 				graphics.drawString(String.valueOf(row.getAmount()), pd.getColumn(9), pd.getRow(tableStartRow + loopCount));
 
 				System.out.println("Row Count :" + rowCount + ", Page Index:" + pageIndex);
-				lastRecordFetched ++;
 		}
 		// Print the footer only for the last row
 		if(maxRow == items.size() - 1) {
-			graphics.drawLine(pd.getStartCol(), pd.getRow(tableStartRow + loopCount), (int)pd.getWidth() - (2*pd.getStartCol()), pd.getRow(tableStartRow + loopCount));
-			String totalPrice = Util.getInMoneyFormatString(total);
+			graphics.drawLine(pd.getStartCol(), pd.getRow(tableStartRow + loopCount), (int)pd.getWidth() - pd.getStartCol(), pd.getRow(tableStartRow + loopCount));
 			graphics.setFont(TITLE3);
-			graphics.drawString("Total: " + totalPrice, pd.getColumn(8), pd.getRow(tableStartRow + loopCount + 1));
+			graphics.drawString("Total: " + printDomain.getTotalAmount(), pd.getColumn(8), pd.getRow(tableStartRow + loopCount + 1));
 		}
 		return PAGE_EXISTS;
 
