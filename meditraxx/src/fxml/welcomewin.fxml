@@ -16,14 +16,7 @@
         <Color blue="0.749" green="0.749" red="0.749" fx:id="x1" />
       </stroke>
     </Line>
-    <Label fx:id="welcomeMsg" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-1.0" minWidth="-1.0" prefHeight="79.5" prefWidth="580.0" text="%com.pravat.meditrax.welcomemsg" textAlignment="JUSTIFY" textFill="#330025" textOverrun="ELLIPSIS" visible="true">
-      <effect>
-        <Glow>
-          <input>
-            <DropShadow />
-          </input>
-        </Glow>
-      </effect>
+    <Label fx:id="welcomeMsg" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-1.0" minWidth="-1.0" prefHeight="79.5" prefWidth="580.0" text="%com.pravat.meditrax.welcomemsg" textAlignment="JUSTIFY" textFill="linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, 0xff0000ff 0.0%, 0x0000ffff 30.0%, 0x000000ff 70.0%, 0x000000ff 100.0%)" textOverrun="ELLIPSIS" visible="true">
       <font>
         <Font name="System Bold" size="30.0" />
       </font>

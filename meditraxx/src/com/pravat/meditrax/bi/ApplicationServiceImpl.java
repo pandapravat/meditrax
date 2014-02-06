@@ -31,7 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 		configMap.put(CLIENT_ADD_1, config.getInfo().getAddress1());
 		configMap.put(CLIENT_ADD_2, config.getInfo().getAddress2());
 		configMap.put(CLIENT_CONTACT, config.getInfo().getPhone());
-		configMap.put(PREF_BG, "STYLE1");
+		configMap.put(PREF_BG, "STYLE2"); // default is style2
 		configMap.put(USR_PWD, config.getPassword());
 		configMap.put(ADMIN_PWD, config.getAdminPassWord());
 		configMap.put(VERSION, config.getVersion());

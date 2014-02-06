@@ -19,9 +19,13 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.util.Callback;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.CollectionUtils;
 
 import com.pravat.meditrax.bi.dao.SuperAdminDao;
@@ -39,14 +43,16 @@ public class SuperAdminController implements Initializable{
 	@FXML TabPane tabPane;
 	@FXML TextArea errorsText;
 
-	@SuppressWarnings("unchecked")
 	@FXML public void onSQLRun(javafx.event.ActionEvent ae) {
-
-
 		String text = query.getSelectedText();
 		System.out.println("came here");
-		if(StringUtils.isNotBlank(text)) {
+		runSql(text);
+	}
 
+	private void runSql(String text) {
+		if(StringUtils.isNotBlank(text)) {
+			errorsText.clear();
+			errorsText.appendText("\nRunning sql.. \n" + text);
 			String upperCase = text.trim().toUpperCase();
 			boolean update= !(upperCase.startsWith("SELECT") || upperCase.startsWith("VALUES"));
 			try {
@@ -54,6 +60,7 @@ public class SuperAdminController implements Initializable{
 				if(update) {
 					int runUpdateStmt = instance.runUpdateStmt(text);
 					affectedRows.setText(String.valueOf(runUpdateStmt));
+					errorsText.appendText("\nSuccessful. Affected rows=" + runUpdateStmt);
 				} else {
 					QueryResult runQuery = instance.runQuery(text);
 					if(null != runQuery) {
@@ -70,19 +77,18 @@ public class SuperAdminController implements Initializable{
 							}
 						}
 					} else {
-						errorsText.setText("No Data Found");
+						errorsText.appendText("\nNo Data Found");
 						tabPane.getSelectionModel().select(1);
 					}
-
+					errorsText.appendText("\nSuccessful...");
 					affectedRows.clear();
 				}
-				errorsText.clear();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				StringWriter stringWriter = new StringWriter();
 				PrintWriter printWriter = new PrintWriter(stringWriter);
 				ex.printStackTrace(printWriter);
-				errorsText.setText(stringWriter.toString());
+				errorsText.appendText("\n\n" + stringWriter.toString());
 				printWriter.close();
 				tabPane.getSelectionModel().select(1);
 			}
@@ -115,15 +121,34 @@ public class SuperAdminController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("VALUES (NEXT VALUE FOR PURCHASE_TX_ID_SQ)").append("\n");
+		stringBuilder.append("SELECT * FROM SALE_TRANSACTION").append("\n");
+		stringBuilder.append("SELECT * FROM PURCHASE_TRANSACTION").append("\n");
+		stringBuilder.append("SELECT * FROM DRUG_BATCH)").append("\n");
+		stringBuilder.append("SELECT * FROM APP_CONFIG").append("\n");
+		stringBuilder.append("SELECT * FROM SALE_DTLS").append("\n");
+
+		query.setText(stringBuilder.toString());
+
+
 	}
 
 	@FXML public void close(ActionEvent ae) {
 		UxUtils.getStage(ae).close();
 	}
 
+	public void additionalInit() {
+		query.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER, KeyCodeCombination.CONTROL_ANY), new Runnable() {
 
+			@Override
+			public void run() {
+				
+				String selectedText = query.getSelectedText();
+				runSql(selectedText);
+			}
+		});
+	}
 
-
-
-
+	Log log = LogFactory.getLog(getClass());
 }
