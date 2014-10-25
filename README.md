@@ -4,7 +4,7 @@ What is meditrax
 ----------------
 Meditrax is a retail pharmaceutical application that eases the day to day life of pharmaceutical retailers
 
-importing to eclipse
+Importing to eclipse
 ---------------------
 1. Download eclipse for java EE from eclipse .org
 2. Add e(fx)clipse plugin to eclipse. If you are using java8 use the latest version. Alternatively you can use the following update site
