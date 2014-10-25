@@ -20,7 +20,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <application.dist>${project.build.directory}/dist</application.dist>
-        <javafx.home>C:\Program Files\Java\jre7</javafx.home>
+        <javafx.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home/jre/</javafx.home>
         <javafx.version>2.1</javafx.version>
     </properties>
 
