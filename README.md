@@ -16,3 +16,4 @@ Running the project
 ------------------
 1. Navigate to build.fxbuild file. Right click on it and click build extfx application. This will create the build.xml ant build.
 2. Right click on the ant build file and click run
+3. This will create the jar file which can be used for running the application
