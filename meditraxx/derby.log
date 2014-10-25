@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Oct 24 21:04:55 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0149-450c-9fb9-000006708800 
+on database directory /Users/pravat/meditrax/database/meditrax with class loader sun.misc.Launcher$AppClassLoader@2e5f8245 
+Loaded from file:/Users/pravat/git/meditrax/meditrax-lib/other/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_71-b14
+user.dir=/Users/pravat/git/meditrax/meditraxx
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.10
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

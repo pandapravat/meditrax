@@ -43,7 +43,7 @@
     </VBox>
   </left>
   <top>
-    <MenuBar fx:id="menubar" focusTraversable="false" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefWidth="717.0000999999975" useSystemMenuBar="true">
+    <MenuBar fx:id="menubar" focusTraversable="false" maxWidth="1.7976931348623157E308"  pickOnBounds="false" prefWidth="717.0000999999975" >
       <effect>
         <InnerShadow>
           <input>
