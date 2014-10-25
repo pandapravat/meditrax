@@ -45,7 +45,6 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.home>/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk/Contents/Home/jre/</javafx.home>
         <javafx.version>2.1</javafx.version>
     </properties>
 
@@ -55,7 +54,7 @@
             <artifactId>javafx-runtime</artifactId>
             <scope>system</scope>
             <version>${javafx.version}</version>
-            <systemPath>${javafx.home}/lib/jfxrt.jar</systemPath>
+            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
